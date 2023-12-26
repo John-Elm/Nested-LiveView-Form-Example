@@ -37,9 +37,9 @@ defmodule NestedWeb.HomeLive do
   end
 
   def handle_event("validate", params, socket) do
-    parent = socket.assigns.form.data
-    form = to_form(Nested.Parent.changeset(parent, params))
-    socket = assign(socket, :form, form)
+    # parent = socket.assigns.form.data
+    # form = to_form(Nested.Parent.changeset(parent, params))
+    # socket = assign(socket, :form, form)
     {:noreply, socket}
   end
 
