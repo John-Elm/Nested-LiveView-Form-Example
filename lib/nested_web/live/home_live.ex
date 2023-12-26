@@ -37,12 +37,13 @@ defmodule NestedWeb.HomeLive do
   end
 
   def handle_event("validate", params, socket) do
+    parent = socket.assigns.form.data
+    form = to_form(Nested.Parent.changeset(parent, params))
+    socket = assign(socket, :form, form)
     {:noreply, socket}
   end
 
   def handle_event("remove-child", params, socket) do
-    IO.inspect socket.assigns.form.data.children
-    IO.inspect params
     %{"child-id" => child_id} = params
     parent = socket.assigns.form.data
     child_to_remove = Enum.find(parent.children, & &1.id == child_id)
@@ -55,7 +56,6 @@ defmodule NestedWeb.HomeLive do
   end
 
   def handle_event("add-child", _params, socket) do
-    IO.inspect socket.assigns.form
     parent = socket.assigns.form.data
     parent = %{parent | children: parent.children ++ [%Nested.Child{id: "child#{System.unique_integer()}"}]}
     form = parent_form(parent)
